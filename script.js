@@ -53,9 +53,13 @@ function openKeep() {
   // Deteksi perangkat
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  if (isMobile) {
-      // Jika perangkat adalah mobile, coba buka aplikasi
-      window.location.href = "intent:#Intent;action=android.intent.action.MAIN;package=com.google.android.keep;end";
+    if (isMobile) {
+      // Jika perangkat adalah Android, coba buka aplikasi
+      window.location.href = "googlekeep://";
+      // Jika aplikasi tidak terbuka, fallback ke web
+      setTimeout(() => {
+          window.location.href = "https://keep.google.com/";
+      }, 1000); // Tunggu 1 detik sebelum fallback
   } else {
       // Jika perangkat adalah desktop, buka tab baru
       window.open("https://keep.google.com/", "_blank");
