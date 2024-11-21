@@ -1,329 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Checklist</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    #time {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-    }
-    h2 {
-      margin-top: 20px;
-    }
-    .task {
-      margin: 10px 0;
-    }
-    .workout-table {
-      margin: 20px 0;
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .workout-table th, .workout-table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    .workout-table th {
-      background-color: #f4f4f4;
-      text-align: left;
-    }
-    select {
-      margin-left: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task & Workout Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="time"></div>
-  <h1>Checklist Harian</h1>
-  <!-- <ul id="checklist">
-    <li class="task">
-      <input type="checkbox" id="task1"> Beres-beres
-      <select id="status-task1">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task2"> Do Something
-      <select id="status-task2">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task3"> Duolingo
-      <select id="status-task3">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task4"> Github
-      <select id="status-task4">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task5"> Login 3
-      <select id="status-task5">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task6"> Login 8
-      <select id="status-task6">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task7"> Check Email
-      <select id="status-task7">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task8"> Check Notes
-      <select id="status-task8">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-    <li class="task">
-      <input type="checkbox" id="task9"> Link to Local Web IoT
-      <select id="status-task9">
-        <option value="belum dikerjakan">Belum Dikerjakan</option>
-        <option value="on progress">On Progress</option>
-        <option value="complete">Complete</option>
-      </select>
-    </li>
-  </ul> -->
+    <div id="datetime">Current Date and Time: <span id="current-time"></span></div>
+    <!-- <h1>Task & Workout Tracker</h1>
+    <div class="container">
+        <div class="checklist-container">
+          <ul id="checklist">
+          </ul>
+        </div>
+        <div class="table-container">
+            <h3>Senin, Rabu, Jumat</h3>
+            <table id="workout-progress">
+                <thead>
+                  <tr>
+                    <th>Latihan</th>
+                    <th>Set & Repetisi</th>
+                    <th>Set</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tbody id="workoutTable"></tbody>
+                </tbody>
+              </table>
+        </div>
+      </div> -->
 
-  <!-- <h2>LINK</h2>
-  <ul>
-    <li><a href="http://localhost" class="link-button">Open IoT Web</a></li>
-    <li><button onclick="openKeep()">Open Keep Notes</button></li>
-  </ul> -->
-  
-  
-
-  <!-- <h2>Workout List</h2>
-  <h3>Senin, Rabu, Jumat</h3> -->
-  <!-- <table class="workout-table">
-    <tr>
-      <th>Latihan</th>
-      <th>Set & Repetisi</th>
-      <th>Set</th>
-    </tr>
-    <tr>
-      <td>Push-up</td>
-      <td>20 reps x 5 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-
-    </tr>
-    <tr>
-      <td>Dips</td>
-      <td>12 reps x 5 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Hand Grip</td>
-      <td>5 reps x 3 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Front Raise</td>
-      <td>1 menit x 3 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Reverse Wrist Curl</td>
-      <td>20 reps x 3 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Wide Push-up</td>
-      <td>15 reps x 4 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Lateral Raise</td>
-      <td>12 reps x 4 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Bent-over Row</td>
-      <td>12 reps x 4 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-  </table>
-
-  <h3>Selasa, Kamis, Sabtu</h3>
-  <table class="workout-table">
-    <tr>
-      <th>Latihan</th>
-      <th>Set & Repetisi</th>
-      <th>Set</th>
-
-    </tr>
-    <tr>
-      <td>Sit-up</td>
-      <td>100 reps x 1 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Latihan Otot Leher</td>
-      <td>12 reps x 5 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Squat Beban (5kg)</td>
-      <td>8 reps x 5 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Bulgarian Split Squat</td>
-      <td>10 reps x 4 set per kaki</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Lunges</td>
-      <td>12 reps x 3 set per kaki</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Plank</td>
-      <td>1 menit x 3 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Leg Raise</td>
-      <td>15 reps x 3 set</td>
-      <td><select id="Push-up">
-        <option value="1">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select></td>
-    </tr>
-  </table> -->
-
-  <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
