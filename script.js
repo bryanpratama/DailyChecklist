@@ -1,9 +1,11 @@
 const TASK_KEY = "tasks";
 const WORKOUT_KEY = "workouts";
 const LAST_RESET_KEY = "last_reset";
+const TOGGLE_STATUS_KEY = "toggle_status"; // Key baru untuk status tombol
 const today = new Date().toISOString().slice(0, 10);
 
 let data = {};
+let isOddDays = JSON.parse(localStorage.getItem(TOGGLE_STATUS_KEY)) ?? true; // Muat status dari localStorage
 
 // Fetch JSON data
 fetch("data.json")
@@ -25,8 +27,19 @@ fetch("data.json")
         // Render checklist
         renderChecklist(data.tasks, tasks);
 
-        // Render workout table
-        renderWorkoutTable(data.workouts, workouts);
+        // Render initial workout table based on toggle status
+        updateWorkoutTableTitleAndButton();
+        const workoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
+        renderWorkoutTable(workoutsData, workouts);
+
+        // Add event listener for toggle button
+        document.getElementById("toggle-button").addEventListener("click", () => {
+            isOddDays = !isOddDays; // Ubah status
+            localStorage.setItem(TOGGLE_STATUS_KEY, isOddDays); // Simpan status tombol
+            updateWorkoutTableTitleAndButton();
+            const updatedWorkoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
+            renderWorkoutTable(updatedWorkoutsData, workouts);
+        });
 
         // Event listeners for updates
         window.updateTaskStatus = (id, status) => {
@@ -38,10 +51,25 @@ fetch("data.json")
         window.updateWorkoutProgress = (id, progress) => {
             workouts[id] = parseInt(progress);
             localStorage.setItem(WORKOUT_KEY, JSON.stringify(workouts));
-            renderWorkoutTable(data.workouts, workouts);
+            const updatedWorkoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
+            renderWorkoutTable(updatedWorkoutsData, workouts);
         };
     })
     .catch(error => console.error("Error loading JSON data:", error));
+
+// Function to update workout table title and button
+function updateWorkoutTableTitleAndButton() {
+    const title = document.getElementById("workout-title");
+    const button = document.getElementById("toggle-button");
+
+    if (isOddDays) {
+        title.textContent = "Senin, Rabu, Jumat";
+        button.textContent = "Switch to Selasa, Kamis, Sabtu";
+    } else {
+        title.textContent = "Selasa, Kamis, Sabtu";
+        button.textContent = "Switch to Senin, Rabu, Jumat";
+    }
+}
 
 // Render checklist
 function renderChecklist(tasksData, tasks) {
@@ -109,7 +137,7 @@ function getWorkoutStatus(progress, totalSets) {
 
 // Update date and time every second
 function updateDateTime() {
-    const datetimeElement = document.getElementById("datetime");
+    const datetimeElement = document.getElementById("current-time");
     const now = new Date();
     const formattedDate = now.toLocaleDateString("id-ID", {
         weekday: "long",

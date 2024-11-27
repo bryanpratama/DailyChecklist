@@ -1,5 +1,5 @@
 {
-    "tasks": [
+  "tasks": [
       { "id": "task1", "name": "Beres-beres" },
       { "id": "task2", "name": "Do Something" },
       { "id": "task3", "name": "Duolingo" },
@@ -10,10 +10,13 @@
       { "id": "task8", "name": "Check Notes" },
       { "id": "task9", "name": "Open Coursepora" },
       { "id": "task10", "name": "Link to Local Web IoT" }
-    ],
-    "workouts": [
+  ],
+  "workouts": [
       { "id": "pushup", "name": "Push-up", "reps": "20 reps x 5 set", "sets": 5 },
       { "id": "dips", "name": "Dips", "reps": "12 reps x 5 set", "sets": 4 }
-    ]
-  }
-  
+  ],
+  "alternateWorkouts": [
+      { "id": "plank", "name": "Plank", "reps": "1 menit x 3 set", "sets": 3 },
+      { "id": "squats", "name": "Squats", "reps": "15 reps x 4 set", "sets": 4 }
+  ]
+}

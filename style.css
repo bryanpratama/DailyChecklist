@@ -186,6 +186,31 @@ body {
     width: 100%;
     max-width: 100px;
   }
+
+  /* Style untuk tombol toggle */
+#toggle-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #2980b9; /* Warna tema sesuai dengan header */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#toggle-button:hover {
+  background-color: #1f6391; /* Warna lebih gelap saat hover */
+  transform: translateY(-2px); /* Efek hover sedikit terangkat */
+}
+
+#toggle-button:active {
+  background-color: #164d6e; /* Warna lebih gelap saat ditekan */
+  transform: translateY(0); /* Kembali ke posisi semula */
+}
+
   
   /* Responsive Design */
   @media screen and (max-width: 768px) {
