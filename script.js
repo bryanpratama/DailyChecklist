@@ -2,60 +2,90 @@ const TASK_KEY = "tasks";
 const WORKOUT_KEY = "workouts";
 const LAST_RESET_KEY = "last_reset";
 const TOGGLE_STATUS_KEY = "toggle_status"; // Key baru untuk status tombol
+const DATA_KEY = "uploaded_data"; // Key untuk data JSON yang diunggah
 const today = new Date().toISOString().slice(0, 10);
 
 let data = {};
 let isOddDays = JSON.parse(localStorage.getItem(TOGGLE_STATUS_KEY)) ?? true; // Muat status dari localStorage
 
-// Fetch JSON data
-fetch("data.json")
-    .then(response => response.json())
-    .then(json => {
-        data = json;
+// Load data dari localStorage jika tersedia
+const savedData = localStorage.getItem(DATA_KEY);
+if (savedData) {
+    data = JSON.parse(savedData); // Muat data dari localStorage jika tersedia
+} else {
+    data = {}; // Kosongkan jika belum ada data
+}
 
-        // Reset logic
-        if (localStorage.getItem(LAST_RESET_KEY) !== today) {
-            localStorage.setItem(LAST_RESET_KEY, today);
-            localStorage.setItem(TASK_KEY, JSON.stringify({}));
-            localStorage.setItem(WORKOUT_KEY, JSON.stringify({}));
-        }
+// Fungsi untuk membaca file JSON yang diunggah
+document.getElementById("upload-button").addEventListener("click", () => {
+    const fileInput = document.getElementById("upload-json");
+    const file = fileInput.files[0];
 
-        // Load saved data or default
-        const tasks = JSON.parse(localStorage.getItem(TASK_KEY)) || {};
-        const workouts = JSON.parse(localStorage.getItem(WORKOUT_KEY)) || {};
+    if (!file) {
+        alert("Pilih file JSON terlebih dahulu!");
+        return;
+    }
 
-        // Render checklist
-        renderChecklist(data.tasks, tasks);
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        console.log("File content:", event.target.result); // Periksa isi file
+        try {
+            const jsonData = JSON.parse(event.target.result);
+            console.log("Parsed JSON:", jsonData); // Periksa hasil parsing
+            // Validasi struktur JSON
+            if (!jsonData.tasks || !Array.isArray(jsonData.tasks)) {
+                throw new Error("Data 'tasks' tidak ditemukan atau bukan array.");
+            }
+            if (!jsonData.workouts || !Array.isArray(jsonData.workouts)) {
+                throw new Error("Data 'workouts' tidak ditemukan atau bukan array.");
+            }
 
-        // Render initial workout table based on toggle status
-        updateWorkoutTableTitleAndButton();
-        const workoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
-        renderWorkoutTable(workoutsData, workouts);
+            // Simpan data ke localStorage
+            localStorage.setItem(DATA_KEY, JSON.stringify(jsonData));
+            alert("Data berhasil diunggah!");
+            const tasks = JSON.parse(localStorage.getItem(TASK_KEY)) || {};
+            const workouts = JSON.parse(localStorage.getItem(WORKOUT_KEY)) || {};
 
-        // Add event listener for toggle button
-        document.getElementById("toggle-button").addEventListener("click", () => {
-            isOddDays = !isOddDays; // Ubah status
-            localStorage.setItem(TOGGLE_STATUS_KEY, isOddDays); // Simpan status tombol
-            updateWorkoutTableTitleAndButton();
-            const updatedWorkoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
-            renderWorkoutTable(updatedWorkoutsData, workouts);
-        });
-
-        // Event listeners for updates
-        window.updateTaskStatus = (id, status) => {
-            tasks[id] = status;
-            localStorage.setItem(TASK_KEY, JSON.stringify(tasks));
+            data = jsonData; // Simpan ke variabel global
             renderChecklist(data.tasks, tasks);
-        };
+            const workoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
+            renderWorkoutTable(workoutsData, workouts);
+        } catch (error) {
+            alert("Gagal membaca file JSON. Pastikan formatnya benar. " + error.message);
+            console.error("Error parsing JSON:", error);
+        }
+    };
 
-        window.updateWorkoutProgress = (id, progress) => {
-            workouts[id] = parseInt(progress);
-            localStorage.setItem(WORKOUT_KEY, JSON.stringify(workouts));
-            const updatedWorkoutsData = isOddDays ? data.workouts : data.alternateWorkouts;
-            renderWorkoutTable(updatedWorkoutsData, workouts);
-        };
-    })
-    .catch(error => console.error("Error loading JSON data:", error));
+    reader.readAsText(file);
+});
+
+// Reset logic
+if (localStorage.getItem(LAST_RESET_KEY) !== today) {
+    localStorage.setItem(LAST_RESET_KEY, today);
+    localStorage.setItem(TASK_KEY, JSON.stringify({}));
+    localStorage.setItem(WORKOUT_KEY, JSON.stringify({}));
+}
+
+// Load saved data or default
+const tasks = JSON.parse(localStorage.getItem(TASK_KEY)) || {};
+const workouts = JSON.parse(localStorage.getItem(WORKOUT_KEY)) || {};
+
+// Render checklist
+renderChecklist(data.tasks || [], tasks);
+
+// Render initial workout table based on toggle status
+updateWorkoutTableTitleAndButton();
+const workoutsData = isOddDays ? (data.workouts || []) : (data.alternateWorkouts || []);
+renderWorkoutTable(workoutsData, workouts);
+
+// Add event listener for toggle button
+document.getElementById("toggle-button").addEventListener("click", () => {
+    isOddDays = !isOddDays; // Ubah status
+    localStorage.setItem(TOGGLE_STATUS_KEY, isOddDays); // Simpan status tombol
+    updateWorkoutTableTitleAndButton();
+    const updatedWorkoutsData = isOddDays ? (data.workouts || []) : (data.alternateWorkouts || []);
+    renderWorkoutTable(updatedWorkoutsData, workouts);
+});
 
 // Function to update workout table title and button
 function updateWorkoutTableTitleAndButton() {
@@ -93,7 +123,7 @@ function renderChecklist(tasksData, tasks) {
     });
 }
 
-// Render workout table
+// Fungsi renderWorkoutTable
 function renderWorkoutTable(workoutsData, workouts) {
     const workoutTable = document.getElementById("workoutTable");
     workoutTable.innerHTML = "";
@@ -118,6 +148,42 @@ function renderWorkoutTable(workoutsData, workouts) {
         workoutTable.appendChild(row);
     });
 }
+
+// Tambahkan di bawah fungsi di atas
+document.getElementById("clear-table-button").addEventListener("click", () => {
+    const confirmClear = confirm("Apakah Anda yakin ingin menghapus tabel latihan? Tindakan ini tidak dapat dibatalkan.");
+    if (confirmClear) {
+        localStorage.removeItem(TASK_KEY);
+        localStorage.removeItem(WORKOUT_KEY);
+        localStorage.removeItem(DATA_KEY); // Hapus data JSON yang diunggah
+        localStorage.removeItem(TOGGLE_STATUS_KEY); // Hapus status toggle
+
+        data = {}; // Reset data yang disimpan dalam memori
+        renderChecklist([], {}); // Kosongkan checklist
+        renderWorkoutTable([], {}); // Kosongkan tabel workout
+        
+        alert("Semua data berhasil dihapus.");
+    }
+});
+
+
+
+
+// Event handler for task status
+window.updateTaskStatus = (id, status) => {
+    tasks[id] = status;
+    localStorage.setItem(TASK_KEY, JSON.stringify(tasks));
+    renderChecklist(data.tasks, tasks);
+};
+
+// Event handler for workout progress
+window.updateWorkoutProgress = (id, progress) => {
+    workouts[id] = parseInt(progress, 10);
+    localStorage.setItem(WORKOUT_KEY, JSON.stringify(workouts));
+    const updatedWorkoutsData = isOddDays ? (data.workouts || []) : (data.alternateWorkouts || []);
+    renderWorkoutTable(updatedWorkoutsData, workouts);
+};
+
 
 // Helpers
 function formatStatus(status) {

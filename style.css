@@ -60,6 +60,61 @@ body {
     color: white;
     margin-bottom: 20px;
   }
+
+  /* Container upload */
+.upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+#upload-json {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 0.9rem;
+}
+
+#upload-button {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  color: white;
+  background-color: #2980b9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#upload-button:hover {
+  background-color: #1f6391;
+}
+
+#clear-table-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#clear-table-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+#clear-table-button:active {
+  background-color: #a93226;
+  transform: translateY(0);
+}
+
   
   /* Checklist Section */
   #checklist {
