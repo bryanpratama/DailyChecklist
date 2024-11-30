@@ -266,6 +266,23 @@ body {
   transform: translateY(0); /* Kembali ke posisi semula */
 }
 
+.link-button {
+  
+
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  color: white;
+  background-color: #2980b9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.link-button:hover {
+  background-color: #1f6391;
+}
+
   
   /* Responsive Design */
   @media screen and (max-width: 768px) {

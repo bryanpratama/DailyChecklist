@@ -215,6 +215,31 @@ function updateDateTime() {
     datetimeElement.textContent = `${formattedDate}, ${formattedTime}`;
 }
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+document.getElementById("open-google-keep").addEventListener("click", () => {
+    console.log("Tombol diklik!"); // Log untuk memastikan event listener bekerja
+
+    if (isMobile) {
+        console.log("Perangkat mobile terdeteksi."); // Debugging
+        if (navigator.userAgent.includes("Android")) {
+            console.log("Mencoba membuka aplikasi Google Keep."); // Debugging
+            window.location.href = "googlekeep://";
+            setTimeout(() => {
+                console.log("Fallback ke web."); // Debugging
+                window.location.href = "https://keep.google.com/";
+            }, 1000);
+        } else {
+            console.log("Buka Google Keep di web untuk perangkat non-Android."); // Debugging
+            window.location.href = "https://keep.google.com/";
+        }
+    } else {
+        console.log("Perangkat desktop terdeteksi. Membuka tab baru."); // Debugging
+        window.open("https://keep.google.com/", "_blank");
+    }
+});
+
+
 // Call the function initially and set an interval
 updateDateTime();
 setInterval(updateDateTime, 1000);
