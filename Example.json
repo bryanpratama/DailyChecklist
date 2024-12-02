@@ -1,0 +1,22 @@
+{
+  "tasks": [
+      { "id": "task1", "name": "task1" },
+      { "id": "task2", "name": "task2" },
+      { "id": "task3", "name": "task3" },
+      { "id": "task4", "name": "task4" },
+      { "id": "task5", "name": "task5" },
+      { "id": "task6", "name": "task6" },
+      { "id": "task7", "name": "task7" },
+      { "id": "task8", "name": "task8" },
+      { "id": "task9", "name": "task9" },
+      { "id": "task10", "name": "task10" }
+  ],
+  "workouts": [
+      { "id": "workouts1", "name": "workouts1", "reps": "20 reps x 5 set", "sets": 5 },
+      { "id": "workouts2", "name": "workouts2", "reps": "12 reps x 5 set", "sets": 4 }
+  ],
+  "alternateWorkouts": [
+      { "id": "workouts3", "name": "workouts3", "reps": "1 menit x 3 set", "sets": 3 },
+      { "id": "workouts4", "name": "workouts4", "reps": "15 reps x 4 set", "sets": 4 }
+  ]
+}
