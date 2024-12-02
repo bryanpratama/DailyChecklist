@@ -20,13 +20,12 @@ Website sederhana yang dirancang untuk membantu mengorganisir kegiatan harian da
 1. Pastikan Git sudah terpasang di perangkat kamu.
 2. Jalankan perintah berikut di terminal untuk meng-clone repository ini:
    ```bash
-   git clone https://github.com/username-kamu/nama-repository-kamu.git
+   git clone https://github.com/bryanpratama/DailyChecklist.git
    ```
-   Gantilah `username-kamu` dan `nama-repository-kamu` dengan detail milikmu.
 
 3. Masuk ke direktori proyek:
    ```bash
-   cd nama-repository-kamu
+   cd DailyChecklist
    ```
 
 
