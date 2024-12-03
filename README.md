@@ -28,6 +28,12 @@ Website sederhana yang dirancang untuk membantu mengorganisir kegiatan harian da
    cd DailyChecklist
    ```
 
+4. Jalankan proyek menggunakan code editor pilihan Anda.
+   
+5. Unggah File JSON **Example.json** yang sudah disediakan.
+
+
+
 
 ---
 
